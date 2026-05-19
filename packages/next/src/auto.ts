@@ -38,7 +38,8 @@ function getConfig(): { name: string; description: string; endpoint: string } {
 
 // ── file scanning ──────────────────────────────────────────
 
-function scanRoutes(apiDir: string, excludePath: string): { segments: string[] }[] {
+/** @internal exported for testing */
+export function scanRoutes(apiDir: string, excludePath: string): { segments: string[] }[] {
   const results: { segments: string[] }[] = [];
   if (!fs.existsSync(apiDir)) return results;
 
@@ -70,7 +71,8 @@ function scanRoutes(apiDir: string, excludePath: string): { segments: string[] }
 
 // ── tool naming ────────────────────────────────────────────
 
-function segmentsToToolName(segs: string[], method: string): string {
+/** @internal exported for testing */
+export function segmentsToToolName(segs: string[], method: string): string {
   const clean = segs.map((s) => s.replace(/^\[(.+)\]$/, '$1'));
   // root API route: just use the method name
   if (clean.length === 0) return method.toLowerCase();
@@ -79,7 +81,8 @@ function segmentsToToolName(segs: string[], method: string): string {
 
 // ── extract dynamic param names from segments ──────────────
 
-function extractRouteParams(segs: string[]): string[] {
+/** @internal exported for testing */
+export function extractRouteParams(segs: string[]): string[] {
   return segs.filter((s) => /^\[.+\]$/.test(s)).map((s) => s.replace(/^\[(.+)\]$/, '$1'));
 }
 
@@ -98,7 +101,7 @@ export interface AutoDiscoverResult {
  * Tool calls are forwarded to the real route handler via fetch().
  * Works in both dev and production — no dynamic imports needed.
  */
-export function setupAutoDiscover(config?: Partial<{ name: string; description: string; endpoint: string }>): AutoDiscoverResult {
+export function setupAutoDiscover(config?: Partial<{ name: string; description: string; endpoint: string; baseDir: string }>): AutoDiscoverResult {
   const final = { ...getConfig(), ...config };
 
   const server = new MCPServer({
@@ -108,8 +111,12 @@ export function setupAutoDiscover(config?: Partial<{ name: string; description: 
     transport: { type: 'http', path: final.endpoint },
   });
 
-  const apiDir = path.join(process.cwd(), 'app', 'api');
-  const exclude = final.endpoint.replace(/^\/?/, '/');
+  const apiDir = path.join(final.baseDir ?? process.cwd(), 'app', 'api');
+  // endpoint like '/api/mcp' -> relative path from app/api is '/mcp'
+  // only strip the /api prefix if present; otherwise use the endpoint as-is
+  const exclude = '/' + final.endpoint
+    .replace(/^\/api\/?/, '')
+    .replace(/^\/\//, '/');  // normalize accidental double-slash
   const routes = scanRoutes(apiDir, exclude);
   const methods = ['GET', 'POST'] as const;
   let toolCount = 0;

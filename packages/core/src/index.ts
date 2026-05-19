@@ -66,7 +66,7 @@ import { DiscoveryManifest } from './discovery/well-known.js';
 import { RateLimiter } from './security/rate-limiter.js';
 import { InputValidator } from './security/validator.js';
 import { getToolMetadata } from './decorators.js';
-import type { MCPServerConfig, ToolExecutionContext, ToolHandler } from './types.js';
+import type { MCPServerConfig, ToolExecutionContext, ToolHandler, ToolDefinition } from './types.js';
 import { z } from 'zod';
 
 export { z };
@@ -171,6 +171,13 @@ export class MCPServer {
    */
   getDiscoveryManifest(): string {
     return this.discovery.generateJSON();
+  }
+
+  /**
+   * List all registered tools with their definitions and schemas.
+   */
+  listTools(): ToolDefinition[] {
+    return this.registry.listTools();
   }
 
   /**
