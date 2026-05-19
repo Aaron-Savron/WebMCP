@@ -1,24 +1,22 @@
-import { createRouteHandler } from '@webmcp1/next';
+import { setupAutoDiscover } from '@webmcp1/next/auto';
 import { StoreService } from '../../../lib/store-service';
+import type { NextRequest } from 'next/server';
 
-// ── Set up the MCP route handler ─────────────────────────
-// This creates GET and POST handlers that plug into Next.js App Router.
-// AI agents hit POST /api/mcp, humans visit the page like normal.
+// ── Use auto-discover to register app/api routes as MCP tools ──
+// Then also register the decorated StoreService for manual tools.
 
-const { server, handlers } = createRouteHandler({
+const { handlers, server } = setupAutoDiscover({
   name: 'WebMCP Demo Store',
   description:
     'A revolutionary e-commerce store that AI agents can interact with directly via the Model Context Protocol. Browse products, search inventory, and purchase items — no web scraping required.',
   endpoint: '/api/mcp',
-  streaming: true,
 });
 
-// ── Register the decorated service class ──────────────────
-// All @MCP.Tool() methods are auto-discovered and registered.
-// One line. Zero boilerplate. That's the whole point.
-
+// Register the decorated service class alongside auto-discovered tools
 server.registerService(new StoreService());
 
-// ── Export GET and POST — Next.js App Router handlers ────
+// Export for debugging
+export { server };
 
-export const { GET, POST } = handlers();
+export const POST = handlers.POST;
+export const GET = handlers.GET;

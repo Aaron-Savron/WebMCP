@@ -122,7 +122,8 @@ export function setupAutoDiscover(config?: Partial<{ name: string; description: 
   let toolCount = 0;
 
   for (const route of routes) {
-    const urlPath = '/' + route.segments.join('/');
+    // segments are relative to app/api, so the actual URL needs /api/ prefix
+    const urlPath = route.segments.length === 0 ? '/api' : '/api/' + route.segments.join('/');
     const routeParams = extractRouteParams(route.segments);
 
     for (const method of methods) {
@@ -223,9 +224,15 @@ export function setupAutoDiscover(config?: Partial<{ name: string; description: 
     },
 
     GET: async (request: NextRequest) => {
-      const url = new URL(request.url);
+      // Next.js rewrites may change request.url, so check both the
+      // original request URL and nextUrl for /.well-known/mcp.json
+      const requestUrl = request.url;
+      const isWellKnown =
+        requestUrl.includes('/.well-known/mcp.json') ||
+        requestUrl.includes('/.well-known/mcp') ||
+        request.nextUrl.pathname === '/.well-known/mcp.json';
 
-      if (url.pathname === '/.well-known/mcp.json') {
+      if (isWellKnown) {
         const { body, headers } = server.discovery.generateResponse();
         return new NextResponse(body, { status: 200, headers: new Headers(headers) });
       }

@@ -70,6 +70,50 @@ export { handlers } from '@webmcp1/next/auto'
 
 Every route becomes an MCP tool named `{path}_{method}` (e.g., `products_get`, `products_search_post`). Tool calls are forwarded to the real route handler. Dynamic routes like `products/[id]` hint `id` as a parameter in the tool schema.
 
+## Quick verify
+
+Clone the repo, install deps, and run the verification script to see MCP in action:
+
+```bash
+git clone https://github.com/Aaron-Savron/WebMCP.git
+cd WebMCP
+npm install
+npm run verify
+```
+
+Or do it manually with curl against any running WebMCP server:
+
+```bash
+# List all available tools
+curl -s -X POST http://localhost:3000/api/mcp \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":"1","method":"tools/list","params":{}}'
+
+# Expected output (abbreviated):
+# {"jsonrpc":"2.0","id":"1","result":{"tools":[
+#   {"name":"health_get","description":"GET /api/health"},
+#   {"name":"products_get","description":"GET /api/products"},
+#   {"name":"search_products","description":"Search for products..."},
+#   ...
+# ]}}
+
+# Call an auto-discovered tool (no decorator needed)
+curl -s -X POST http://localhost:3000/api/mcp \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":"2","method":"tools/call","params":{"name":"health_get","arguments":{}}}'
+
+# Expected:
+# {"jsonrpc":"2.0","id":"2","result":{"content":[{"type":"text","text":"{\n  \"status\": \"ok\",\n  \"uptime\": 1.23,\n  \"timestamp\": 1712345678901\n}"}]}}
+
+# Call a decorated tool
+curl -s -X POST http://localhost:3000/api/mcp \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":"3","method":"tools/call","params":{"name":"search_products","arguments":{"query":"hoodie"}}}'
+
+# Expected:
+# {"jsonrpc":"2.0","id":"3","result":{"content":[{"type":"text","text":"{\n  \"products\": [{...}],\n  \"count\": 1\n}"}]}}
+```
+
 ## How it works
 
 1. You register tools on an MCPServer (via decorators or manually)

@@ -228,11 +228,11 @@ describe('setupAutoDiscover', () => {
     const tools = result.server.listTools();
     const getProducts = tools.find((t) => t.name === 'products_get');
     expect(getProducts).toBeDefined();
-    expect(getProducts!.description).toBe('GET /products');
+    expect(getProducts!.description).toBe('GET /api/products');
 
     const postSearch = tools.find((t) => t.name === 'products_search_post');
     expect(postSearch).toBeDefined();
-    expect(postSearch!.description).toBe('POST /products/search');
+    expect(postSearch!.description).toBe('POST /api/products/search');
   });
 
   it('builds schemas with dynamic params for [segment] routes', () => {
