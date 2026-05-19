@@ -9,23 +9,19 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     },
     "./plugin": {
       "types": "./dist/plugin.d.ts",
-      "import": "./dist/plugin.js",
-      "require": "./dist/plugin.cjs"
+      "import": "./dist/plugin.js"
     },
     "./middleware": {
       "types": "./dist/middleware.d.ts",
-      "import": "./dist/middleware.js",
-      "require": "./dist/middleware.cjs"
+      "import": "./dist/middleware.js"
     },
     "./auto": {
       "types": "./dist/auto.d.ts",
-      "import": "./dist/auto.js",
-      "require": "./dist/auto.cjs"
+      "import": "./dist/auto.js"
     }
   },
   "scripts": {
@@ -35,15 +31,16 @@
     "test": "vitest run",
     "clean": "rm -rf dist"
   },
+  "files": ["dist", "package.json"],
   "dependencies": {
     "@webmcp1/core": "^0.1.1",
-    "next": "^14.2.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
     "typescript": "^5.5.0",
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.0",
+    "next": "^14.2.0",
     "vitest": "^1.6.0"
   },
   "peerDependencies": {
