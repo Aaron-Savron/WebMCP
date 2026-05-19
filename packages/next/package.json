@@ -21,6 +21,11 @@
       "types": "./dist/middleware.d.ts",
       "import": "./dist/middleware.js",
       "require": "./dist/middleware.cjs"
+    },
+    "./auto": {
+      "types": "./dist/auto.d.ts",
+      "import": "./dist/auto.js",
+      "require": "./dist/auto.cjs"
     }
   },
   "scripts": {
