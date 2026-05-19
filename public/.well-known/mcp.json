@@ -1,0 +1,42 @@
+{
+  "mcp": {
+    "version": "1.0.0",
+    "endpoints": {
+      "ws": "wss://demo.webmcp.dev/api/mcp",
+      "http": "https://demo.webmcp.dev/api/mcp"
+    },
+    "authentication": {
+      "type": "none"
+    },
+    "capabilities": {
+      "tools": true,
+      "resources": false,
+      "prompts": false,
+      "streaming": true,
+      "subscriptions": false
+    },
+    "description": "WebMCP Demo Store — An AI-ready e-commerce site. AI agents can browse, search, and purchase products directly through the MCP protocol. No web scraping required.",
+    "tools": [
+      {
+        "name": "search_products",
+        "description": "Search for products in the store catalog. Supports filtering by query, category, price range, and stock availability."
+      },
+      {
+        "name": "get_product",
+        "description": "Get detailed information about a specific product by its ID."
+      },
+      {
+        "name": "purchase_item",
+        "description": "Purchase one or more items from the store. Creates an order and returns the order confirmation with an order ID."
+      },
+      {
+        "name": "get_order_status",
+        "description": "Get the status of a previous order by order ID."
+      },
+      {
+        "name": "get_store_info",
+        "description": "Get information about the store, including available categories and capabilities."
+      }
+    ]
+  }
+}

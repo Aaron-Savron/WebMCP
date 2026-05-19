@@ -1,0 +1,81 @@
+:root {
+  --mcp-purple: #a855f7;
+  --mcp-blue: #3b82f6;
+  --mcp-glow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* floating animation — makes products hover like they're in a sci-fi movie */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* glow animation — W logo lookin' like a lightsaber */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.6); }
+}
+
+/* pulse ring — for when you want something to BREATHE */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 0.3; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* custom scrollbar — because default scrollbars are for quitters */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #a855f7, #3b82f6);
+  border-radius: 4px;
+}
+
+/* glass morphism — "hey I saw this on dribbble once" */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* MCP badge — "this site speaks robot" */
+.mcp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a855f7;
+}

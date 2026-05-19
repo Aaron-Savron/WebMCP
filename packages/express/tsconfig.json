@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@webmcp1/core": ["../core/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../core" }
+  ]
+}

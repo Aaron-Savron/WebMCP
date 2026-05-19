@@ -1,0 +1,27 @@
+{
+  "name": "webmcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The open standard for AI Agent-to-Website communication",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0",
+    "vitest": "^1.6.0",
+    "tsx": "^4.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

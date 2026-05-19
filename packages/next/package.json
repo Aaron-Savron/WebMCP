@@ -1,0 +1,47 @@
+{
+  "name": "@webmcp1/next",
+  "version": "0.1.1",
+  "description": "Next.js SDK for WebMCP - Make your Next.js site Agent-Ready",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./plugin": {
+      "types": "./dist/plugin.d.ts",
+      "import": "./dist/plugin.js",
+      "require": "./dist/plugin.cjs"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js",
+      "require": "./dist/middleware.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@webmcp1/core": "^0.1.1",
+    "next": "^14.2.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0"
+  }
+}
